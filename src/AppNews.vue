@@ -27,6 +27,15 @@ export default {
       }
     }
   },
+  emits: {
+    'open-news' (num) {
+      if (num) {
+        return true
+      }
+      console.warn('No data in open-news emit')
+      return false
+    }
+  },
   data () {
     return {
       isOpenLocale: this.isOpen
