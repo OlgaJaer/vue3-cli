@@ -45,6 +45,12 @@ export default {
       readRate: 0
     }
   },
+  provide () {
+    return {
+      title: 'List of all news',
+      news: this.news
+    }
+  },
   methods: {
     // openNews (data, data2) {
     //   this.openRate++
