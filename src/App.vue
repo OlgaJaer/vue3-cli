@@ -1,40 +1,53 @@
 <template>
   <div class="container pt-1">
-    <div class="card center">
-      <h2>Slots</h2>
+    <div class="card">
+      <h2>Dynamic and Async Components </h2>
+
+      <app-button
+        :color="oneColor "
+        @action="active = 'one'"
+      >One</app-button>
+      <app-button
+        :color="twoColor" @action="active = 'two'"
+      >Two</app-button>
     </div>
 
-    <app-list>
-      <!-- <template #default="slotProps"> -->
-      <template #default="{iter,idx}">
-        <!-- <strong>{{slotProps.idx + 1 }}</strong>
-        <span style="color: green">Item {{slotProps.iter}} </span> -->
-        <strong>{{ idx + 1 }}</strong>
-        <span style="color: green"> Item {{iter}} </span>
-      </template>
-    </app-list>
+    <!-- <app-text-one v-if="active === 'one'"></app-text-one>
+    <app-text-two v-else-if="active === 'two'"></app-text-two> -->
 
-    <app-block>
-      <p>The main content</p>
+    <keep-alive>
+      <component :is="componentName"></component>
+    </keep-alive>
 
-      <template #header >
-        <h3>title</h3>
-      </template>
-
-      <template v-slot:footer>
-        <!-- <strong>This is a footer</strong> -->
-      </template>
-
-    </app-block>
   </div>
 </template>
 
 <script>
-import AppBlock from './AppBlock'
-import AppList from './AppList'
-
+import AppButton from './AppButton'
+import AppTextOne from './AppTextOne'
+import AppTextTwo from './AppTextTwo'
 export default {
-  components: { AppBlock, AppList }
+  data () {
+    return {
+      active: 'one' // two
+    }
+  },
+  computed: {
+    componentName () {
+      // if (this.active === 'one') {
+      //   return 'app-text-one'
+      // }
+      // return 'app-text-two'
+      return 'app-text-' + this.active
+    },
+    oneColor () {
+      return this.active === 'one' ? 'primary' : ''
+    },
+    twoColor () {
+      return this.active === 'two' ? 'primary' : ''
+    }
+  },
+  components: { AppButton, AppTextOne, AppTextTwo }
 }
 
 </script>
