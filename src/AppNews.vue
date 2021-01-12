@@ -1,15 +1,25 @@
 <template>
-  <div class="card center" >
+  <div class="card" >
       <h3>{{ title }}</h3>
       <button class="btn" @click="open">{{isOpenLocale ? 'Close' : 'Open'}} </button>
-      <p v-if="isOpenLocale">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga sunt necessitatibus, deleniti officiis, iusto ab modi culpa sed cupiditate ratione, at aut quam eligendi. Pariatur, adipisci? Aliquid voluptatum placeat animi?</p>
+      <button class="btn danger" v-if="wasRead" @click="$emit('unmark', id)">
+        Mark unread
+      </button>
+      <div v-if="isOpenLocale">
+        <hr />
+        <p >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga sunt necessitatibus, deleniti officiis, iusto ab modi culpa sed cupiditate ratione, at aut quam eligendi. Pariatur, adipisci? Aliquid voluptatum placeat animi?</p>
+        <button class="btn primary" v-if="!wasRead" @click="mark">Read News</button>
+      </div>
+
     </div>
 </template>
 
 <script>
+
 export default {
   // props: ['title'],
   props: {
+    wasRead: Boolean,
     title: {
       type: String,
       required: true
@@ -28,11 +38,19 @@ export default {
     }
   },
   emits: {
-    'open-news' (num) {
-      if (num) {
+    'open-news': null,
+    'read-news' (id) {
+      if (id) {
         return true
       }
-      console.warn('No data in open-news emit')
+      console.warn('No id for emit "read-news')
+      return false
+    },
+    'unmark' (id) {
+      if (id) {
+        return true
+      }
+      console.warn('No id for emit "unmark')
       return false
     }
   },
@@ -47,7 +65,14 @@ export default {
       if (this.isOpenLocale) {
         this.$emit('open-news', 42, 24)
       }
+    },
+    mark () {
+      this.isOpenLocale = false
+      this.$emit('read-news', this.id)
     }
+    // unmark () {
+    //   this.$emit('unmark', this.id)
+    // }
   }
 }
 </script>
