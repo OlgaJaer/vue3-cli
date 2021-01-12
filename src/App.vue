@@ -2,19 +2,19 @@
   <div class="container pt-1">
     <div class="card center">
       <h2>Actual news {{now}} </h2>
-      <span>Opened <strong>{{ openRate }}</strong> | Read <strong>{{readRate}}</strong> </span>
+      <span>Opened <strong>{{ openRate }}</strong> | Read <strong>{{ readRate }}</strong> </span>
     </div>
 
     <app-news
-    v-for="item in news"
-    :key="item.id"
-    :title="item.title"
-    :id="item.id"
-    :is-open="item.isOpen"
-    :was-read="item.wasRead"
-    @open-news="openNews"
-    @read-news="readNews"
-    @unmark="unReadNews"
+      v-for="item in news"
+      :key="item.id"
+      :title="item.title"
+      :id="item.id"
+      :is-open="item.isOpen"
+      :was-read="item.wasRead"
+      @open-news="openRate++"
+      @read-news="readNews"
+      @unmark="unReadNews"
     ></app-news>
 
   </div>
@@ -46,10 +46,9 @@ export default {
     }
   },
   methods: {
-    openNews (data, data2) {
-      this.openRate++
-      console.log(data, data2)
-    },
+    // openNews (data, data2) {
+    //   this.openRate++
+    // },
     readNews (id) {
       const idx = this.news.findIndex(news => news.id === id)
       this.news[idx].wasRead = true

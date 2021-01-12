@@ -1,23 +1,34 @@
 <template>
   <div class="card" >
       <h3>{{ title }}</h3>
-      <button class="btn" @click="open">{{isOpenLocale ? 'Close' : 'Open'}} </button>
-      <button class="btn danger" v-if="wasRead" @click="$emit('unmark', id)">
-        Mark unread
-      </button>
+      <app-button
+        @action="open"
+      >{{isOpenLocale ? 'Close' : 'Open'}}
+      </app-button>
+      <app-button
+        :color="'danger'"
+        v-if="wasRead"
+        @action="$emit('unmark', id)"
+      >Mark unread</app-button>
       <div v-if="isOpenLocale">
         <hr />
         <p >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga sunt necessitatibus, deleniti officiis, iusto ab modi culpa sed cupiditate ratione, at aut quam eligendi. Pariatur, adipisci? Aliquid voluptatum placeat animi?</p>
-        <button class="btn primary" v-if="!wasRead" @click="mark">Read News</button>
+        <app-button
+          color="primary"
+          v-if="!wasRead"
+          @action="mark"
+        >Read News</app-button>
       </div>
 
     </div>
 </template>
 
 <script>
+import AppButton from './AppButton'
 
 export default {
   // props: ['title'],
+  // emits: ['open-news],
   props: {
     wasRead: Boolean,
     title: {
@@ -73,6 +84,7 @@ export default {
     // unmark () {
     //   this.$emit('unmark', this.id)
     // }
-  }
+  },
+  components: { AppButton }
 }
 </script>
