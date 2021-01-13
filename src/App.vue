@@ -2,7 +2,7 @@
   <div class="container">
     <form class="card" @submit.prevent="submitForm">
       <h1>Анкета на Vue разработчика!</h1>
-      <div class="form-control">
+      <div class="form-control" :class='{invalid: errors.name}'>
         <label for="name">Как тебя зовут?</label>
         <input
         type="text"
@@ -10,6 +10,7 @@
         placeholder="Введи имя"
         v-model.trim="name"
         >
+        <small>{{errors.name}} </small>
       </div>
 
       <div class="form-control">
@@ -76,25 +77,46 @@ export default {
       city: 'ufa',
       relocate: null,
       skills: [],
-      agree: false
+      agree: false,
+      errors: {
+        name: null
+      }
     }
   },
   methods: {
+    formIsValid () {
+      let isValid = true
+      if (this.name.length === 0) {
+        this.errors.name = 'Name can not be empty'
+        isValid = false
+      } else {
+        this.errors.name = null
+      }
+      return isValid
+    },
     submitForm () {
-      console.group('Form Data')
-      console.log(this.name)
-      console.log(this.age)
-      console.log(this.city)
-      console.log(this.relocate)
-      console.log(this.skills)
-      console.log(this.agree)
+      if (this.formIsValid()) {
+        console.group('Form Data')
+        console.log(this.name)
+        console.log(this.age)
+        console.log(this.city)
+        console.log(this.relocate)
+        console.log(this.skills)
+        console.log(this.agree)
 
-      console.groupEnd()
+        console.groupEnd()
+      }
     }
   }
 }
 </script>
 
 <style>
+.form-control small {
+  color: red;
+}
 
+.form-control.invalid input {
+  border-color: red;
+}
 </style>
