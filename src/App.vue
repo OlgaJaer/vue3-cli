@@ -1,6 +1,8 @@
 <template>
   <div class="container pt-1">
     <div class="card">
+      <async-component></async-component>
+
       <h2>Dynamic and Async Components </h2>
 
       <app-button
