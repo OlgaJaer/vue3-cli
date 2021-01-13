@@ -4,6 +4,7 @@
       <h2>Dynamic and Async Components </h2>
 
       <app-button
+        ref="myBtn"
         :color="oneColor "
         @action="active = 'one'"
       >One</app-button>
@@ -32,13 +33,24 @@ export default {
       active: 'one' // two
     }
   },
+  mounted () {
+    // check set()
+    // setTimeout(() => {
+    //   this.componentName = 'something new'
+    // }, 1500)
+    this.$refs.myBtn.btnLog()
+  },
   computed: {
-    componentName () {
-      // if (this.active === 'one') {
-      //   return 'app-text-one'
-      // }
-      // return 'app-text-two'
-      return 'app-text-' + this.active
+    // componentName () {
+    //   return 'app-text-' + this.active
+    // },
+    componentName: {
+      get () {
+        return 'app-text-' + this.active
+      },
+      set (value) {
+        console.log('componentName', value)
+      }
     },
     oneColor () {
       return this.active === 'one' ? 'primary' : ''
