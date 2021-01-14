@@ -2,7 +2,7 @@
   <div class="container">
     <form class="card" @submit.prevent="submitForm">
       <h1>Анкета на Vue разработчика!</h1>
-      <div class="form-control" :class='{invalid: errors.name}'>
+      <!-- <div class="form-control" :class='{invalid: errors.name}'>
         <label for="name">Как тебя зовут?</label>
         <input
         type="text"
@@ -11,7 +11,16 @@
         v-model.trim="name"
         >
         <small>{{errors.name}} </small>
-      </div>
+      </div> -->
+
+       <!-- v-model:modelValue /default  modelValue can be changed-->
+
+      <app-input
+        placeholder="Введи имя"
+        :error="errors.name"
+        label="Как тебя зовут?"
+        v-model:value="name"
+      ></app-input>
 
       <div class="form-control">
         <label for="age">Выбери возраст</label>
@@ -69,6 +78,7 @@
 </template>
 
 <script>
+import AppInput from './AppInput'
 export default {
   data () {
     return {
@@ -83,9 +93,11 @@ export default {
       }
     }
   },
+  components: { AppInput },
   methods: {
     formIsValid () {
       let isValid = true
+
       if (this.name.length === 0) {
         this.errors.name = 'Name can not be empty'
         isValid = false
@@ -103,7 +115,6 @@ export default {
         console.log(this.relocate)
         console.log(this.skills)
         console.log(this.agree)
-
         console.groupEnd()
       }
     }
