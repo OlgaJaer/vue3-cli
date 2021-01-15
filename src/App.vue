@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <app-alert :alert="alert" @close="alert = null"></app-alert>
     <form class="card" @submit.prevent="createPerson">
       <h2>Работа с базой данных</h2>
 
@@ -14,12 +15,14 @@
     <app-people-list
     :people="people"
     @load="loadPeople"
+    @remove="removePerson"
     ></app-people-list>
   </div>
 </template>
 
 <script>
 import AppPeopleList from './AppPeopleList'
+import AppAlert from './AppAlert'
 // eslint-disable-next-line no-unused-vars
 import axios from 'axios'
 
@@ -27,7 +30,8 @@ export default {
   data () {
     return {
       name: '',
-      people: []
+      people: [],
+      alert: null
     }
   },
   mounted () {
@@ -55,20 +59,48 @@ export default {
       this.name = ''
     },
     async loadPeople () {
-      const { data } = await axios.get('https://vue-http-44ded-default-rtdb.europe-west1.firebasedatabase.app/people.json')
-      // console.log(data)
-      const result = Object.keys(data).map(key => {
-        return {
-          id: key,
-          // firstName: data[key].firstName
-          ...data[key]
+      try {
+        const { data } = await axios.get('https://vue-http-44ded-default-rtdb.europe-west1.firebasedatabase.app/people.json')
+        // console.log(data)
+        if (!data) {
+          throw new Error('List of people is empty')
         }
-      })
-      // console.log(result)
-      this.people = result
+        const result = Object.keys(data).map(key => {
+          return {
+            id: key,
+            // firstName: data[key].firstName
+            ...data[key]
+          }
+        })
+        // console.log(result)
+        this.people = result
+      } catch (error) {
+        this.alert = {
+          type: 'danger',
+          title: 'Error!',
+          text: error.message
+        }
+        // console.log(error.message)
+      }
+    },
+    async removePerson (id) {
+      try {
+        const name = this.people.find(person => person.id === id).firstName
+
+        await axios.delete(`https://vue-http-44ded-default-rtdb.europe-west1.firebasedatabase.app/people/${id}.json`)
+        this.people = this.people.filter(person => person.id !== id)
+
+        this.alert = {
+          type: 'primary',
+          title: 'Success!',
+          text: `Person '${name}' was deleted`
+        }
+      } catch (error) {
+
+      }
     }
   },
-  components: { AppPeopleList }
+  components: { AppPeopleList, AppAlert }
 }
 </script>
 
