@@ -30,7 +30,9 @@ export default {
       people: []
     }
   },
-  components: { AppPeopleList },
+  mounted () {
+    this.loadPeople()
+  },
   methods: {
     async createPerson () {
       const response = await fetch('https://vue-http-44ded-default-rtdb.europe-west1.firebasedatabase.app/people.json', {
@@ -45,6 +47,11 @@ export default {
 
       const firebaseData = await response.json()
       console.log(firebaseData)
+      this.people.push({
+        firstName: this.name,
+        id: firebaseData.name
+      })
+
       this.name = ''
     },
     async loadPeople () {
@@ -60,8 +67,8 @@ export default {
       // console.log(result)
       this.people = result
     }
-  }
-
+  },
+  components: { AppPeopleList }
 }
 </script>
 
