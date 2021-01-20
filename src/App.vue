@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    <h2 v-color:[type]="myColor">Directives</h2>
+    <h2 v-color:[type].blink.hover="myColor">Directives</h2>
 
     <div class="form-control">
       <label for="input">Default Active</label>
       <input type="text" v-focus id='input'>
     </div>
-    <button class="btn" @click="myColor = myColor === 'darkred' ? 'darkblue' : 'darkred' ">Make blue</button>
+    <button class="btn" @click="myColor = 'darkblue'">Make blue</button>
     <button class="btn" @click="type = type === 'color' ? 'backgroundColor' : 'color'">Change type</button>
   </div>
 </template>
