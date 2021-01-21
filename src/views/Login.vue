@@ -12,7 +12,10 @@
     </div>
 
     <button class="btn primary" type="submit">Войти</button>
-    <button class="btn warning">Забыл пароль?</button>
+    <router-link to="/forget" custom v-slot="{navigate}">
+      <button class="btn warning" @click="navigate">Забыл пароль?</button>
+    </router-link>
+
   </form>
 </template>
 
