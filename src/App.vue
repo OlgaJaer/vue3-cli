@@ -1,16 +1,16 @@
 <template>
   <the-navbar></the-navbar>
   <div class="container with-nav">
-    <login></login>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import TheNavbar from './components/TheNavbar'
-import Login from './views/Login'
+// import Login from './views/Login'
 
 export default {
-  components: { TheNavbar, Login },
+  components: { TheNavbar },
   provide () {
     return {
       emails: [
