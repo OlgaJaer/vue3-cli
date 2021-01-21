@@ -27,6 +27,7 @@ export default {
       password: ''
     }
   },
+  inject: ['login'],
   computed: {
     isValid () {
       return this.email !== '' && this.password !== ''
@@ -35,7 +36,8 @@ export default {
   methods: {
     submit () {
       if (this.isValid) {
-        // login
+        // this.$router.replace('/dashboard')
+        this.login()
       }
     }
   }
