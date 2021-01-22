@@ -5,5 +5,13 @@ export default createStore({
     return {
       counter: 1
     }
+  },
+  mutations: {
+    increment (state) {
+      state.counter++
+    },
+    add (sate, payload) {
+      sate.counter += payload.value
+    }
   }
 })
