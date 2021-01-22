@@ -23,7 +23,7 @@ const router = createRouter({
       path: '/mail',
       component: Mail,
       children: [
-        { path: ':mailId?', component: AppEmailBody, props: true }
+        { path: ':mailId?', component: AppEmailBody, name: 'email', props: true }
       ]
     },
     { path: '/:notFound(.*)', component: NotFound }
