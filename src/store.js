@@ -10,8 +10,26 @@ export default createStore({
     increment (state) {
       state.counter++
     },
-    add (sate, payload) {
-      sate.counter += payload.value
+    add (state, payload) {
+      state.counter += payload.value
+    }
+  },
+  actions: {
+    incAsync (context, payload) {
+      setTimeout(() => {
+        context.commit('add', payload)
+      }, payload.delay)
+    }
+  },
+  getters: {
+    counter (state) {
+      // if (state.counter > 20) {
+      //   return 0
+      // }
+      return state.counter
+    },
+    doubleCounter (_, getters) {
+      return getters.counter * 2
     }
   }
 })
