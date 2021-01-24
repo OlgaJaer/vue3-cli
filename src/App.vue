@@ -18,28 +18,15 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import TheNavbar from './TheNavbar.vue'
 
 export default {
-  computed: mapGetters(['counter', 'doubleCounter', 'uppercaseTitle']),
-  // computed: {
-  //   ...mapMutations()
-  // }
   components: { TheNavbar },
+  // computed: mapGetters(['counter', 'doubleCounter', 'uppercaseTitle']),
+  computed: {
+    ...mapGetters(['uppercaseTitle']),
+    ...mapGetters('count', ['counter', 'doubleCounter'])
+  },
   methods: {
-    ...mapMutations({ inc: 'increment' }),
-    // ...mapMutations(['increment']),
-    // inc () {
-    //   this.increment()
-    // },
-
-    // inc () {
-    //   this.$store.commit('increment')
-    // },
-    ...mapActions(['incAsync'])
-    // incAsync () {
-    //   this.$store.dispatch('incAsync', {
-    //     value: 10,
-    //     delay: 500
-    //   })
-    // }
+    ...mapMutations({ inc: 'count/increment' }),
+    ...mapActions('count', ['incAsync'])
   }
 }
 </script>

@@ -14,7 +14,7 @@ export default {
     // counter () {
     //   return this.$store.getters.counter
     // },
-    ...mapGetters(['counter'])
+    ...mapGetters('count', ['counter'])
   },
   methods: {
     // ...mapMutations({
@@ -23,9 +23,9 @@ export default {
     // add() {
     //   this.addFive({value:5})
     // }
-    ...mapMutations(['add']),
+    ...mapMutations(['count/add']),
     addFive () {
-      this.add({ value: 5 })
+      this['count/add']({ value: 5 })
 
       // this.$store.commit({
       //   type: 'add',
