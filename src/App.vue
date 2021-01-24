@@ -3,28 +3,43 @@
   <div class="container with-nav">
     <div class="card">
       <h1>Про Vuex</h1>
-      <h2>Счетчик {{$store.getters.counter}} ({{$store.getters.doubleCounter}}) </h2>
+      <h2>Счетчик {{counter}} ({{doubleCounter}}) </h2>
       <button class="btn primary" @click="inc">Add</button>
-      <button class="btn danger" @click="incAsync">Add 10</button>
+      <button class="btn danger" @click="incAsync({
+        value: 10,
+        delay: 500
+      })">Add 10</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import TheNavbar from './TheNavbar.vue'
 
 export default {
+  computed: mapGetters(['counter', 'doubleCounter']),
+  // computed: {
+  //   ...mapMutations()
+  // }
   components: { TheNavbar },
   methods: {
-    inc () {
-      this.$store.commit('increment')
-    },
-    incAsync () {
-      this.$store.dispatch('incAsync', {
-        value: 10,
-        delay: 500
-      })
-    }
+    ...mapMutations({ inc: 'increment' }),
+    // ...mapMutations(['increment']),
+    // inc () {
+    //   this.increment()
+    // },
+
+    // inc () {
+    //   this.$store.commit('increment')
+    // },
+    ...mapActions(['incAsync'])
+    // incAsync () {
+    //   this.$store.dispatch('incAsync', {
+    //     value: 10,
+    //     delay: 500
+    //   })
+    // }
   }
 }
 </script>

@@ -15,9 +15,10 @@ export default createStore({
     }
   },
   actions: {
-    incAsync (context, payload) {
+    incAsync ({ commit }, payload) {
+      // console.log(context)
       setTimeout(() => {
-        context.commit('add', payload)
+        commit('add', payload)
       }, payload.delay)
     }
   },
