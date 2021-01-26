@@ -4,7 +4,7 @@
       <h1>Vue Composition Api</h1>
       <hr>
       <p>Название: <strong>{{ name }}</strong></p>
-      <p>Версия: <strong>{{ version }}</strong></p>
+      <p>Версия: <strong>{{ version }} | {{doubleVersion}}</strong></p>
 
       <button class="btn" @click="change">Изменить</button>
     </div>
@@ -12,7 +12,14 @@
 </template>
 
 <script>
-import { ref, reactive, isReactive, isRef } from 'vue' //  toRefs,
+import {
+  ref,
+  reactive,
+  isReactive,
+  isRef,
+  computed,
+  watch
+} from 'vue' //  toRefs,
 export default {
   setup () {
     const framework = reactive({
@@ -23,9 +30,20 @@ export default {
     const name = ref('VueJS')
     const version = ref(3) // ref.value : 3
 
-    console.log(framework)
+    const doubleVersion = computed(() => {
+      return version.value * 2
+    })
+
+    watch([doubleVersion, name], (newValues, oldValues) => {
+      console.log('new Values', newValues)
+      console.log('old Values', oldValues)
+    })
+
+    console.log(isRef(doubleVersion))
+
+    // console.log(framework)
     console.log(isReactive(framework))
-    console.log(isRef(name.value))
+    // console.log(isRef(name.value))
 
     function changeInfo () {
       // framework.name = 'Vue JS!'
@@ -39,20 +57,9 @@ export default {
       // ...toRefs(framework),
       // framework,
       // changeInfo
-      name, version: version, change: changeInfo
+      name, version: version, change: changeInfo, doubleVersion
     }
   }
-  // data () {
-  //   return {
-  //     name: 'VueJS',
-  //     version: 3
-  //   }
-  // },
-  // methods: {
-  //   changeInfo () {
-  //     this.name = 'Vue JS!'
-  //     this.version = 4
-  //   }
-  // }
+
 }
 </script>
