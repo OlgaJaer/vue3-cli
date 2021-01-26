@@ -6,6 +6,11 @@
       <p>Название: <strong>{{ name }}</strong></p>
       <p>Версия: <strong>{{ version }} | {{doubleVersion}}</strong></p>
 
+      <div class="form-control">
+        <input type="text" ref="textInput">
+        <input type="text" v-model="firstName">
+      </div>
+
       <button class="btn" @click="change">Изменить</button>
     </div>
   </div>
@@ -16,7 +21,6 @@ import {
   ref,
   reactive,
   isReactive,
-  isRef,
   computed,
   watch
 } from 'vue' //  toRefs,
@@ -29,35 +33,32 @@ export default {
 
     const name = ref('VueJS')
     const version = ref(3) // ref.value : 3
+    const textInput = ref(0)
+    const firstName = ref('')
 
     const doubleVersion = computed(() => {
       return version.value * 2
     })
 
-    watch([doubleVersion, name], (newValues, oldValues) => {
-      console.log('new Values', newValues)
-      console.log('old Values', oldValues)
+    // watch([doubleVersion, name], (newValues, oldValues) => {
+    //   console.log('new Values', newValues)
+    //   console.log('old Values', oldValues)
+    // })
+    watch(firstName, (newV, old) => {
+      console.log(newV)
     })
 
-    console.log(isRef(doubleVersion))
+    // console.log(isRef(doubleVersion))
 
-    // console.log(framework)
     console.log(isReactive(framework))
-    // console.log(isRef(name.value))
 
     function changeInfo () {
-      // framework.name = 'Vue JS!'
-      // framework.version = 42
       name.value = 'Vue JS!'
       version.value = 42
+      console.log(textInput.value.value)
     }
     return {
-      // name: framework.name,
-      // version: framework.version,
-      // ...toRefs(framework),
-      // framework,
-      // changeInfo
-      name, version: version, change: changeInfo, doubleVersion
+      name, version: version, change: changeInfo, doubleVersion, textInput, firstName
     }
   }
 
