@@ -21,6 +21,7 @@ export default {
   setup (props, context) {
     function change () {
       context.emit('change-version', 3)
+      console.log(context)
     }
     return {
       changetoThree: change,
